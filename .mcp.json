@@ -1,0 +1,22 @@
+{
+  "mcpServers": {
+    "lvgl-docs": {
+      "type": "http",
+      "url": "https://lvgl.mcp.kapa.ai/",
+      "description": "LVGL AI — official LVGL/LVGL Pro documentation MCP server (read-only)"
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"],
+      "description": "Context7 — up-to-date docs for LVGL, ESP-IDF, PlatformIO, ESPHome"
+    },
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_MCP_PAT}"
+      },
+      "description": "GitHub MCP — issues, PRs, Actions, releases (set GITHUB_MCP_PAT in your env)"
+    }
+  }
+}

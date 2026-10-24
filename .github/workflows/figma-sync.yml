@@ -1,0 +1,42 @@
+name: Figma design sync
+
+# Pulls design tokens from the Figma file (via the Figma REST API) and
+# regenerates include/figma_tokens.h so the LVGL UI stays in sync with Figma.
+# Configure repo secrets: FIGMA_TOKEN (personal access token), FIGMA_FILE_KEY
+# (the key in the file URL: figma.com/design/<FILE_KEY>/...).
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * *" # daily, 06:00 UTC
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Sync tokens from Figma
+        env:
+          FIGMA_TOKEN: ${{ secrets.FIGMA_TOKEN }}
+          FIGMA_FILE_KEY: ${{ secrets.FIGMA_FILE_KEY }}
+        run: python tools/figma_tokens.py
+
+      - name: Commit regenerated tokens
+        run: |
+          if git diff --quiet include/figma_tokens.h; then
+            echo "No token changes"
+          else
+            git config user.name "figma-sync-bot"
+            git config user.email "actions@users.noreply.github.com"
+            git add include/figma_tokens.h
+            git commit -m "chore: sync design tokens from Figma"
+            git push
+          fi

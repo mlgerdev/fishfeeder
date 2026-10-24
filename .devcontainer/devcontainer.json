@@ -1,0 +1,24 @@
+{
+  "name": "FishFeeder (PlatformIO)",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12-bookworm",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {}
+  },
+  "postCreateCommand": "pip install --user platformio esptool",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "platformio.platformio-ide",
+        "ms-vscode.cpptools",
+        "figma.figma-vscode-extension"
+      ],
+      "settings": {
+        "files.associations": {
+          "*.h": "c"
+        }
+      }
+    }
+  },
+  "forwardPorts": [8000],
+  "remoteUser": "vscode"
+}

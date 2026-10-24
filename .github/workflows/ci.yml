@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Cache PlatformIO packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.platformio
+          key: pio-${{ runner.os }}-${{ hashFiles('platformio.ini') }}
+          restore-keys: pio-${{ runner.os }}-
+
+      - name: Install PlatformIO
+        run: pip install -U platformio
+
+      - name: Build UI node (ESP32-S3, LVGL)
+        run: pio run -e ui-node-esp32s3
+
+      - name: Build relay node (ESP8266)
+        run: pio run -e relay-node-esp8266
+
+      - name: Collect firmware artifacts
+        run: |
+          mkdir -p artifacts
+          cp .pio/build/ui-node-esp32s3/firmware.bin    artifacts/fishfeeder-ui-node-esp32s3.bin
+          cp .pio/build/relay-node-esp8266/firmware.bin artifacts/fishfeeder-relay-node-esp8266.bin
+          ls -la artifacts
+
+      - name: Upload firmware artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: fishfeeder-firmware
+          path: artifacts/

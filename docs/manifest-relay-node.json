@@ -1,0 +1,15 @@
+{
+  "name": "FishFeeder Relay Node (ESP8266 NodeMCU V3)",
+  "version": "1.0.0",
+  "funding_url": "",
+  "new_install_prompt_erase": true,
+  "builds": [
+    {
+      "chipFamily": "ESP8266",
+      "improv": false,
+      "parts": [
+        { "path": "fishfeeder-relay-node-esp8266.bin", "offset": 65536 }
+      ]
+    }
+  ]
+}

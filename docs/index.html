@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FishFeeder — Web Flasher</title>
+  <script type="module"
+    src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
+  <style>
+    :root {
+      --bg: #0B1220; --card: #13223D; --card-hi: #1B3054;
+      --accent: #00C2A8; --accent-dim: #0A5F55;
+      --text: #E6F1FF; --dim: #7C93B3; --warn: #FFB454;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg); color: var(--text); min-height: 100vh;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      display: flex; flex-direction: column; align-items: center;
+      padding: 48px 16px 64px;
+    }
+    .logo { font-size: 15px; letter-spacing: 3px; color: var(--accent); margin-bottom: 8px; }
+    h1 { font-size: 34px; margin-bottom: 6px; }
+    .sub { color: var(--dim); margin-bottom: 40px; }
+    .grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); width: 100%; max-width: 860px; }
+    .card {
+      background: var(--card); border: 1px solid var(--card-hi); border-radius: 16px;
+      padding: 26px; display: flex; flex-direction: column; gap: 12px;
+    }
+    .card h2 { font-size: 20px; }
+    .tag {
+      display: inline-block; background: var(--accent-dim); color: var(--accent);
+      border-radius: 999px; padding: 3px 12px; font-size: 12px; letter-spacing: 1px;
+      align-self: flex-start;
+    }
+    .card p { color: var(--dim); font-size: 14px; line-height: 1.55; }
+    esp-web-install-button { margin-top: 6px; }
+    esp-web-install-button button {
+      background: var(--accent); color: #04211D; border: 0; border-radius: 10px;
+      padding: 14px 26px; font-size: 16px; font-weight: 700; cursor: pointer; width: 100%;
+    }
+    esp-web-install-button[install-unsupported] button {
+      background: var(--card-hi); color: var(--dim); cursor: not-allowed;
+    }
+    .note {
+      max-width: 860px; width: 100%; margin-top: 34px; background: var(--card);
+      border-radius: 12px; padding: 18px 22px; color: var(--dim); font-size: 13.5px; line-height: 1.7;
+    }
+    .note b { color: var(--warn); }
+    a { color: var(--accent); }
+    footer { margin-top: 28px; color: var(--dim); font-size: 12.5px; }
+  </style>
+</head>
+<body>
+  <div class="logo">FISHFEEDER</div>
+  <h1>Web Flasher</h1>
+  <p class="sub">Flash the firmware straight from your browser — no toolchain needed.</p>
+
+  <div class="grid">
+    <div class="card">
+      <span class="tag">UI NODE</span>
+      <h2>ESP32-S3-Touch-LCD-4.3B</h2>
+      <p>The 4.3" touchscreen panel: LVGL home screen, feeding schedule,
+         feed history and the ESP-NOW link to the relay node.</p>
+      <esp-web-install-button manifest="manifest-ui-node.json">
+        <button slot="activate">Install UI node firmware</button>
+      </esp-web-install-button>
+    </div>
+
+    <div class="card">
+      <span class="tag">RELAY NODE</span>
+      <h2>ESP8266 NodeMCU V3 + 5V relay</h2>
+      <p>The actuator node: listens on ESP-NOW and pulses the feeder relay.
+         Read the RELAY MAC from the serial monitor after flashing.</p>
+      <esp-web-install-button manifest="manifest-relay-node.json">
+        <button slot="activate">Install relay node firmware</button>
+      </esp-web-install-button>
+    </div>
+  </div>
+
+  <div class="note">
+    <b>Before you flash:</b> connect the board with a USB cable and use
+    <b>Chrome / Edge / Opera</b> (desktop or Android) — Web Serial is required.
+    A first install erases the device, so WiFi credentials are set afterwards via
+    <code>secrets.h</code> (see the README). If flashing the ESP32-S3 fails,
+    hold the <b>BOOT</b> button while pressing <b>RESET</b>, then retry.
+  </div>
+
+  <footer>FishFeeder · built automatically by GitHub Actions ·
+    <a href="https://github.com/mlgerdev/fishfeeder">source</a></footer>
+</body>
+</html>

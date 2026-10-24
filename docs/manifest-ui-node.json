@@ -1,0 +1,15 @@
+{
+  "name": "FishFeeder UI Node (ESP32-S3-Touch-LCD-4.3B)",
+  "version": "1.0.0",
+  "funding_url": "",
+  "new_install_prompt_erase": true,
+  "builds": [
+    {
+      "chipFamily": "ESP32-S3",
+      "improv": false,
+      "parts": [
+        { "path": "fishfeeder-ui-node-esp32s3.bin", "offset": 0 }
+      ]
+    }
+  ]
+}

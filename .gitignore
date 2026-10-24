@@ -1,0 +1,21 @@
+# PlatformIO
+.pio/
+.pioenvs/
+.piolibdeps/
+.platformio/
+
+# Local secrets — never commit these
+src/ui_node/secrets.h
+src/relay_node/secrets.h
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Misc
+__pycache__/
+*.pyc
+node_modules/
+*.log
